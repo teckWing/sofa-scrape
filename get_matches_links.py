@@ -12,7 +12,7 @@ from sys import exit
 # Defining command line arguments
 parser = argparse.ArgumentParser(description='Get links for a given league.')
 parser.add_argument("--league", help="A link to a league.", default="")
-parser.add_argument("--season", help="A link to a league.", default="21/22")
+parser.add_argument("--season", help="Season to scrape in the AA/AA format. Example: 21/22", default="21/22")
 parser.add_argument("--output", help="The name of the output file.", default="matches_links.csv")
 args = parser.parse_args()
 
@@ -44,19 +44,25 @@ season=args.season
 driver.find_element(By.XPATH,"//li[text()="+"'"+season+"']").click()
 
 # Scrolling down to the league days
-# ! FIX THIS: Generalize scrolling to the right button in order for the program to find it
-try:
-    driver.execute_script("window.scrollTo(0, 1000)") 
-    driver.implicitly_wait(3)
-    
-    # Click to go to the league days
-    driver.find_element(By.XPATH, "//div[text()=\"By Round\"]").click()
-except:
-    driver.execute_script("window.scrollTo(0, 1000)") 
-    driver.implicitly_wait(3)
+# ! FIX THIS: Generalize scrolling to the right button in order for the program to find it [FIXED]
+# ? Check if it works over multiple screen sizes
+def checkElement():
+    try:
+        driver.find_element(By.XPATH, "//div[text()=\"By Round\"]").click()
+        return True
+    except:
+        return False
 
-    # Click to go to the league days
-    driver.find_element(By.XPATH, "//div[text()=\"By Round\"]").click()
+step = 0 # Control the scrolling pace
+# Scroll until the Matches Section appears to be clickable
+while True:
+    step += 500
+    driver.execute_script("window.scrollTo(0, {})".format(step))
+    driver.implicitly_wait(4)
+    if checkElement():
+        break
+    else:
+        continue
 
 print("[READY]")
 print("Getting links...")
