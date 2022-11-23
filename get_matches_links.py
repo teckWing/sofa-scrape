@@ -13,7 +13,8 @@ from sys import exit
 parser = argparse.ArgumentParser(description='Get links for a given league.')
 parser.add_argument("--league", help="A link to a league.", default="")
 parser.add_argument("--season", help="Season to scrape in the AA/AA format. Example: 21/22", default="21/22")
-parser.add_argument("--output", help="The name of the output file.", default="matches_links.csv")
+parser.add_argument("--output", help="The name of the output file.", default="matches_links")
+parser.add_argument("--rounds", help="The number of rounds in the given season.", default="38")
 args = parser.parse_args()
 
 # Check whether a link has been passed 
@@ -38,7 +39,7 @@ driver.get(args.league)
 print("Connection established!")
 
 # Selecting the season provided as input
-print("Positioning")
+print("\nPositioning")
 driver.find_element(By.XPATH,'//button/div/span[text()="22/23"]').click()
 season=args.season
 driver.find_element(By.XPATH,"//li[text()="+"'"+season+"']").click()
@@ -58,17 +59,19 @@ step = 0 # Control the scrolling pace
 while True:
     step += 500
     driver.execute_script("window.scrollTo(0, {})".format(step))
-    driver.implicitly_wait(4)
+    driver.implicitly_wait(3)
     if checkElement():
         break
     else:
         continue
 
-print("[READY]")
+driver.implicitly_wait(2)
+
+print("\n[READY]")
 print("Getting links...")
 
 # For each league day, get all matches links
-for i in tqdm(range(0,37)):
+for i in tqdm(range(0, int(args.rounds)-1)):
     matches=driver.find_elements(By.XPATH, "//div[@class='sc-hLBbgP hBOvkB']/a ")
     #print(matches) # uncomment for troubleshooting
     
@@ -80,8 +83,9 @@ for i in tqdm(range(0,37)):
 # Final output
 df = pd.DataFrame(data)
 
-print("Writing file: data/{}".format(args.output))
-df.to_csv("./data/{}".format(args.output), index=False)
+fout = "./data/links/{}_{}.csv".format(args.output, str(args.season).replace("/", "_"))
+print("\nWriting file: {}".format(fout))
+df.to_csv(fout, index=False)
 
-print("[FINISHED]")
-print("Run get_matches_stats.py for scraping player and teams statistics.")
+print("\n[FINISHED]")
+print("Run get_matches_stats.py for scraping player and teams statistics.\n")
