@@ -33,7 +33,7 @@ Clone this repo using:
 ```
 
 Go to [sofascore.com](https://sofascore.com) and search for the league of interest. Note down the link and the number of rounds in the season.  
-Execute the command below filling the respective fields, for example:
+Execute the command below giving the respective arguments, for example:
 
 ``` sh
 > python get_matches_links.py \
