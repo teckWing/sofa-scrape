@@ -54,45 +54,19 @@ print("\n[READY]")
 print("Getting links...")
 
 links = {'lnk': []}
-countries = driver.find_elements(By.XPATH, "//span[@class='sc-eDWCr LNyIs']") # lista paesi
-for country in countries: # per ogni paese
+countries = driver.find_elements(By.XPATH, "//span[@class='sc-eDWCr LNyIs']") # countries list
+for country in countries: # for each country
     time.sleep(2)
-    driver.execute_script("arguments[0].scrollIntoView();", country)
-    country.click() # apro la lista dei campionati
-    leagues = driver.find_elements(By.XPATH, "//div[@class='sc-hLBbgP gOkXmD']//a") # ottengo la lista dei campionati
-    for league in leagues: # per ogni campionato
-        links['lnk'].append(league.get_attribute('href')) # ottengo il link classico da dare in pasto a get_matches_links.py
+    driver.execute_script("arguments[0].scrollIntoView();", country) # focus on each
+    country.click() # open up the relative leagues
+    leagues = driver.find_elements(By.XPATH, "//div[@class='sc-hLBbgP gOkXmD']//a") # get leagues list
+    for league in leagues: # for each league
+        links['lnk'].append(league.get_attribute('href')) # get the link
         print(league.get_attribute('href'))
     country.click()
     time.sleep(2)
-
-    #step += 20
-    #driver.execute_script("window.scrollTo(0, {})".format(step))
 
 
 print("\nWriting file: ./data/links/all_leagues.csv")
 df = pd.DataFrame(links)
 df.to_csv("./data/links/all_leagues.csv", index=False)
-
-
-exit(0)
-
-# For each league day, get all matches links
-for i in tqdm(range(0, int(args.rounds)-1)):
-    matches=driver.find_elements(By.XPATH, "//div[@class='sc-hLBbgP hBOvkB']/a ")
-    #print(matches) # uncomment for troubleshooting
-    
-    for x in matches:
-        data["lnk"].append(x.get_attribute("href"))
-        data["id"].append(x.get_attribute("data-id"))
-    driver.find_element(By.XPATH, "//span[text()='Previous']").click()  
-
-# Final output
-df = pd.DataFrame(data)
-
-fout = "./data/links/{}_{}.csv".format(args.output, str(args.season).replace("/", "_"))
-print("\nWriting file: {}".format(fout))
-df.to_csv(fout, index=False)
-
-print("\n[FINISHED]")
-print("Run get_matches_stats.py for scraping player and teams statistics.\n")
