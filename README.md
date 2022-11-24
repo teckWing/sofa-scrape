@@ -1,7 +1,6 @@
 # A sofascore.com scraper.
 
-Build your football database and analyze it from both exploratory and inferential perspectives.  
-⚽️📈
+Build your football database and analyze it from both exploratory and inferential perspectives.
 
 <p align="left">
   <a href="">
