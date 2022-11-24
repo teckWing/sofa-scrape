@@ -65,3 +65,13 @@ Execute the command below by passing the respective arguments, for example:
 
 Now in ```data/links``` the file containing the matches links has been created.  
 This will be used by the next command to scroll through the various matches and extract the statistics of each one.
+
+Finally, to extract all the stats of each individual player in each match run the following command:
+
+``` sh
+> python get_matches_stats.py \
+    --links links_laliga_20_21 \
+    --output stats_laliga_20_21
+```
+
+The output file will be created in ```data/stats```.
