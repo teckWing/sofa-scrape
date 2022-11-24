@@ -43,7 +43,7 @@ options:
 Clone this repo using:
 
 ``` sh
-> git clone https://github.com/lorenzotrcnl/sofa-scrape
+> git clone https://github.com/lorenzotrcnl/sofa-scrape && cd sofa-scrape
 ```
   
 Install the required packages using:
@@ -63,10 +63,10 @@ Execute the command below by passing the respective arguments, for example:
     --rounds 38
 ```
 
-Now in ```data/links``` the file containing the matches links has been created.  
+Now in ```data/links``` will be created the file containing the list of matches links.  
 This will be used by the next command to scroll through the various matches and extract the statistics of each one.
 
-> **Note**: the final file name will be the combination of --output and --season, so in the previous command the final name will be ```links_laliga_20_21```.
+> **Note**: the final output name will be the combination of --output and --season, so in the previous command it will be ```links_laliga_20_21```.
 
 Finally, to extract all the stats of each individual player in each match run the following command:
 
