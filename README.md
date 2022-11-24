@@ -3,6 +3,16 @@
 With this scraper yuo can extract stats regarding teams and player on the official Sofascore website.  
 Aligned with its current structure.
 
+<p align="left">
+  <a href="">
+    <img alt="Maintenance" src="https://img.shields.io/maintenance/yes/2022" target="_blank" />
+  </a>
+  
+  <a href="">
+    <img alt="Contributors" src="https://img.shields.io/github/contributors/lorenzotrcnl/sofa-scrape" target="_blank" />
+  </a>  
+</p>
+
 ## Features
 These are the features at the current stage:
 
