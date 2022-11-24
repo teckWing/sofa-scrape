@@ -14,6 +14,8 @@ Build your football database and analyze it from both exploratory and inferentia
 
 ## Features
 
+In the current version:
+
 ✅ Constantly updated with the current version of the website  
 ✅ Get performances stats about all the players in a match  
 ✅ Easy to use  
