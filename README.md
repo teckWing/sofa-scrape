@@ -1,7 +1,14 @@
 # A sofascore.com scraper.
 
 With this scraper yuo can extract stats regarding teams and player on the official Sofascore website.  
-Aligned with its current html structure.
+Aligned with its current structure.
+
+## Features
+These are the features at the current stage:
+
+✅ Get performances stats about all the players in a match  
+✅ Easy to use  
+❌ Only scraping data from past seasons  
 
 ## Usage
 ``` sh
@@ -20,7 +27,14 @@ options:
 
 ``` sh
 > python get_matches_stats.py -h  
-usage: 
+usage: get_matches_stats.py [-h] [--links LINKS] [--output OUTPUT]
+
+Get stats for a given matches links.
+
+options:
+  -h, --help       show this help message and exit
+  --links LINKS    The name of the file containing matches link.
+  --output OUTPUT  The name of the output file.
 
 ```
 
@@ -31,7 +45,13 @@ Clone this repo using:
 ``` sh
 > git clone https://github.com/lorenzotrcnl/sofa-scrape
 ```
+  
+Install the required packages using:
 
+``` sh
+> pip install -r requirements.txt
+```
+  
 Go to [sofascore.com](https://sofascore.com) and search for the league of interest. Note down the link and the number of rounds in the season.  
 Execute the command below by passing the respective arguments, for example:
 

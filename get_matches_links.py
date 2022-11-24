@@ -29,6 +29,7 @@ if args.league == "":
 #options.add_argument("--headless")  # testing
 
 # Initialize data and the driver
+print("[INITIALIZING...]")
 data= {"lnk":[], "id":[]}
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 driver.maximize_window()

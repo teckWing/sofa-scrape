@@ -1,31 +1,39 @@
 from genericpath import isfile
+from requests import session
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
 import numpy as np
-from selenium.webdriver.common.by import By
+import argparse
+from tqdm import tqdm
+from sys import exit
 import os
+
+
+
 
 
 def get_summary_stats(driver, save):
     player_names = driver.find_elements(By.XPATH,
-        "//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[2]"
+        "//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[2]"
     )
 
-    player_goals = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[3]")
-    player_assists = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[4]")
+    player_goals = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[3]")
+    player_assists = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[4]")
 
     player_minutes = driver.find_elements(By.XPATH,
-        "//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[10]"
+        "//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[10]"
     )
     player_position = driver.find_elements(By.XPATH,
-        "//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[11]"
+        "//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[11]"
     )
 
     player_rating = driver.find_elements(By.XPATH,
-        "//table//span[@class='sc-egiyK iKDtjT']"
+        "//table//span[@class='sc-eDWCr kODVra']"
     )
-
-    
 
     player_objects = list()
     for i in range(len(player_names)):
@@ -47,18 +55,18 @@ def get_summary_stats(driver, save):
 def get_attacking_stats(driver, save):
     driver.find_element(By.XPATH,"//*[text()='Attack']").click()
     player_names = driver.find_elements(By.XPATH,
-        "//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[2]"
+        "//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[2]"
     )
 
-    player_shots_on = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[3]")
+    player_shots_on = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[3]")
     
-    player_shots_off = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[4]")
+    player_shots_off = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[4]")
     
-    player_shots_blc = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[5]")
+    player_shots_blc = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[5]")
 
-    player_dribbles_info = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[6]")
+    player_dribbles_info = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[6]")
     
-    player_notes = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[7]")
+    player_notes = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[7]")
     
 
     player_objects = list()
@@ -84,14 +92,14 @@ def get_attacking_stats(driver, save):
 def get_defending_stats(driver, save):
     driver.find_element(By.XPATH,"//*[text()='Defence']").click()
     player_names = driver.find_elements(By.XPATH,
-        "//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[2]"
+        "//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[2]"
     )
-    player_clearances = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[3]")
-    player_shots_blocked = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[4]")
-    player_interceptions = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[5]")
-    player_tackles = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[6]")
-    player_dribbledpast= driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[7]")
-    player_notes = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[8]")
+    player_clearances = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[3]")
+    player_shots_blocked = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[4]")
+    player_interceptions = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[5]")
+    player_tackles = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[6]")
+    player_dribbledpast= driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[7]")
+    player_notes = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[8]")
     
     player_objects = list()
     for i in range(len(player_names)):
@@ -110,16 +118,16 @@ def get_defending_stats(driver, save):
 def get_passing_stats(driver, save):
     driver.find_element(By.XPATH,"//*[text()='Passing']").click()
     player_names = driver.find_elements(By.XPATH,
-        "//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[2]"
+        "//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[2]"
     )
     player_touches = driver.find_elements(By.XPATH,
-        "//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[3]"
+        "//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[3]"
     )
-    player_passes_info = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[4]")
-    player_key_passes = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[5]")
-    player_crosses_info = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[6]")
-    player_long_balls_info = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[7]")
-    player_notes = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[8]")
+    player_passes_info = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[4]")
+    player_key_passes = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[5]")
+    player_crosses_info = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[6]")
+    player_long_balls_info = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[7]")
+    player_notes = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[8]")
     
 
     player_objects = list()
@@ -157,16 +165,16 @@ def get_passing_stats(driver, save):
 def get_duel_stats(driver, save):
     driver.find_element(By.XPATH,"//*[text()='Duels']").click()
     player_names = driver.find_elements(By.XPATH,
-        "//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[2]"
+        "//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[2]"
     )
 
-    player_gduels_info = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[3]")
-    player_aduels_info = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[4]")
+    player_gduels_info = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[3]")
+    player_aduels_info = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[4]")
     
-    player_dispossessed = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[5]")
-    player_fouled = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[7]")
-    player_fouls = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[6]")
-    player_offside = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[8]")
+    player_dispossessed = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[5]")
+    player_fouled = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[7]")
+    player_fouls = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[6]")
+    player_offside = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[8]")
     
     player_objects = list()
     for i in range(len(player_names)):
@@ -191,14 +199,14 @@ def get_duel_stats(driver, save):
 def get_goalkeeping_stats(driver, save):
     driver.find_element(By.XPATH,"//*[text()='Goalkeeper']").click()
     player_names = driver.find_elements(By.XPATH,
-        "//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[2]"
+        "//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[2]"
     )
 
-    player_saves = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[3]")
-    player_punches = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[4]")
-    player_run_outs_info = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[5]")
-    player_high_claims = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[6]")
-    player_notes = driver.find_elements(By.XPATH,"//table[@class='sc-dJjYzT cYmHGS'] /tbody/tr/td[7]")
+    player_saves = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[3]")
+    player_punches = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[4]")
+    player_run_outs_info = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[5]")
+    player_high_claims = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[6]")
+    player_notes = driver.find_elements(By.XPATH,"//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[7]")
 
     player_objects = list()
     for i in range(len(player_names)):
@@ -223,36 +231,76 @@ def get_goalkeeping_stats(driver, save):
 
 def collect_data(driver):
     summary_stats = get_summary_stats(driver, False)
+
     attacking_stats = get_attacking_stats(driver, False)
-    matches = [item for item in summary_stats.columns if
-               item in attacking_stats.columns]
+    matches = [item for item in summary_stats.columns if item in attacking_stats.columns]
     total_stats = pd.merge(summary_stats, attacking_stats, on=matches)
+
     defending_stats = get_defending_stats(driver, False)
-    matches = [item for item in total_stats.columns if
-               item in defending_stats.columns]
+    matches = [item for item in total_stats.columns if item in defending_stats.columns]
     total_stats = pd.merge(total_stats, defending_stats, on=matches)
+    
     passing_stats = get_passing_stats(driver, False)
-    matches = [item for item in total_stats.columns if
-               item in passing_stats.columns]
+    matches = [item for item in total_stats.columns if item in passing_stats.columns]
     total_stats = pd.merge(total_stats, passing_stats, on=matches)
+
     duel_stats = get_duel_stats(driver, False)
-    matches = [item for item in total_stats.columns if
-               item in duel_stats.columns]
+    matches = [item for item in total_stats.columns if item in duel_stats.columns]
     total_stats = pd.merge(total_stats, duel_stats, on=matches)
+
     goalkeeping_stats = get_goalkeeping_stats(driver, False)
-    total_stats = pd.merge(total_stats, goalkeeping_stats, on='Player',
-                           how='outer')
+    total_stats = pd.merge(total_stats, goalkeeping_stats, on='Player', how='outer')
     total_stats.replace(np.nan, '-', inplace=True)
-    if os.path.isfile("totalStats.csv")==True:
-        total_stats.to_csv('totalStats.csv', sep=',', line_terminator='\n',
-                       encoding='utf-8', index=False, mode="a", header=False)
+
+    fout = "./data/stats/{}.csv".format(args.output)
+    print("Writing update to: ", fout)
+    if os.path.isfile(fout)==True:
+        total_stats.to_csv(fout, 
+                           sep=',', 
+                           lineterminator='\n', 
+                           encoding='utf-8', 
+                           index=False, 
+                           mode="a", 
+                           header=False)
     else:
-        total_stats.to_csv('totalStats.csv', sep=',', line_terminator='\n',
-                       encoding='utf-8', index=False)
+        total_stats.to_csv(fout, 
+                           sep=',', 
+                           line_terminator='\n',
+                           encoding='utf-8', 
+                           index=False)
 
 
-driver = webdriver.Chrome("chromedriver.exe")
-df = pd.read_csv("link_partite.csv")
+
+# Defining command line arguments
+parser = argparse.ArgumentParser(description='Get stats for a given matches links.')
+parser.add_argument("--links", help="The name of the file containing matches link.", default="")
+parser.add_argument("--output", help="The name of the output file.", default="stats_league")
+args = parser.parse_args()
+
+# Check whether the given matches links exists.
+if os.path.isfile("./data/links/{}.csv".format(args.links)) == False:
+    print("A file containing matches links must be provided!")
+    print("Make sure it exists and it is located in data/links/.")
+    print("Use the --links argument.")
+    print("Example: --links links_laliga_20_21")
+    exit(0)
+
+print("File found!")
+print("[INITIALIZING...]")
+
+# No GUI test
+#options = Options()
+#options.add_argument("--headless")  # ! testing
+
+# Initialize the driver
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+#driver.maximize_window()
+
+# Read the given file
+df = pd.read_csv("./data/links/{}.csv".format(args.links))
+print("File loaded.")
+
+print("[READY]\n")
 for r in df.iloc():
     id = str(r['id'])
     custom= r['lnk'].split("/")[-1]
@@ -261,10 +309,17 @@ for r in df.iloc():
     driver.execute_script(s)
     driver.execute_script("location.reload();")
     driver.implicitly_wait(5)
-    try:
-        driver.find_element(By.XPATH,"//div[text()='Player statistics']").click()
-        collect_data(driver)
-    except:
-        continue
+
+    print("Collecting: ", r['lnk'])
+
+    driver.find_element(By.XPATH,"//div[text()='Player statistics']").click()
+    collect_data(driver)
+
+    print("\n")
+    #try:
+    #    driver.find_element(By.XPATH,"//div[text()='Player statistics']").click()
+    #    collect_data(driver)
+    #except:
+    #    continue
     
 driver.quit()
