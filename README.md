@@ -59,7 +59,7 @@ Execute the command below by passing the respective arguments, for example:
 > python get_matches_links.py \
     --league https://www.sofascore.com/tournament/football/spain/laliga/8 \
     --output links_laliga \
-    --season 21/22 \
+    --season 20/21 \
     --rounds 38
 ```
 
