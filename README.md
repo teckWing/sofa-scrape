@@ -87,10 +87,10 @@ Finally, to extract all the stats of each individual player in each match run th
 ```
 
 The output file will be created in ```data/stats```.
-
-## To-Do
-- Add what match player's stats belongs to
-- Add round variable in player's stats
-- Implement scraping of the current season
+  
+## 🚧 To-Do
+- [ ] Add what match player's stats belongs to
+- [ ] Add round variable in player's stats
+- [ ] Implement scraping of the current season
 
 Feel free to propose improvements and contribute to the repo.
