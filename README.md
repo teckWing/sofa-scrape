@@ -66,6 +66,8 @@ Execute the command below by passing the respective arguments, for example:
 Now in ```data/links``` the file containing the matches links has been created.  
 This will be used by the next command to scroll through the various matches and extract the statistics of each one.
 
+> **Note**: the final file name will be the combination of --output and --season, so in the previous command the final name will be ```links_laliga_20_21```.
+
 Finally, to extract all the stats of each individual player in each match run the following command:
 
 ``` sh
