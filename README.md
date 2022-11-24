@@ -1,7 +1,7 @@
 # A sofascore.com scraper.
 
-With this scraper yuo can extract stats regarding teams and player on the official Sofascore website.  
-Aligned with its current structure.
+Build your football database and analyze it from both exploratory and inferential perspectives.  
+⚽️📈
 
 <p align="left">
   <a href="">
@@ -14,11 +14,19 @@ Aligned with its current structure.
 </p>
 
 ## Features
-These are the features at the current stage:
 
+✅ Constantly updated with the current version of the website  
 ✅ Get performances stats about all the players in a match  
 ✅ Easy to use  
 ❌ Only scraping data from past seasons  
+
+## Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+
+- Internet Connection
+- Chrome
+- Python 3.6+
 
 ## Usage
 ``` sh
