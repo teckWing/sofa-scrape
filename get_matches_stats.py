@@ -14,8 +14,6 @@ import os
 
 
 
-
-
 def get_summary_stats(driver, save):
     player_names = driver.find_elements(By.XPATH,
         "//table[@class='sc-dIfARi cmjpkd'] /tbody/tr/td[2]"
@@ -265,7 +263,7 @@ def collect_data(driver):
     else:
         total_stats.to_csv(fout, 
                            sep=',', 
-                           line_terminator='\n',
+                           lineterminator='\n',
                            encoding='utf-8', 
                            index=False)
 
